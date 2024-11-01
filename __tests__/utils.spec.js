@@ -61,6 +61,16 @@ describe('Utils', () => {
         });
       });
 
+      it('shows the commit sha', () => {
+        const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
+
+        expect(attachments[0].fields.find(a => a.title === 'Commit')).toEqual({
+          title: 'Commit',
+          value: `<https://github.com/voxmedia/github-action-slack-notify-build/commit/abc123 | commit>`,
+          short: true,
+        });
+      });
+
       it('links to the branch', () => {
         const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
 

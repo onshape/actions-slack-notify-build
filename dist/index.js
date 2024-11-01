@@ -12758,6 +12758,7 @@ function buildSlackAttachments({ status, color, github }) {
   const branch = event === 'pull_request' ? payload.pull_request.head.ref : ref.replace('refs/heads/', '');
 
   const sha = event === 'pull_request' ? payload.pull_request.head.sha : github.context.sha;
+  const short_sha = sha.substring(0, 7)
   const runId = parseInt(process.env.GITHUB_RUN_ID, 10);
 
   const referenceLink =
@@ -12785,6 +12786,11 @@ function buildSlackAttachments({ status, color, github }) {
         {
           title: 'Workflow',
           value: `<https://github.com/${owner}/${repo}/actions/runs/${runId} | ${workflow}>`,
+          short: true,
+        },
+        {
+          title: 'Commmt',
+          value: `<https://github.com/${owner}/${repo}/commit/${sha} | ${short_sha}>`,
           short: true,
         },
         {
@@ -15906,8 +15912,8 @@ class OidcClient {
             const res = yield httpclient
                 .getJson(id_token_url)
                 .catch(error => {
-                throw new Error(`Failed to get ID Token. \n 
-        Error Code : ${error.statusCode}\n 
+                throw new Error(`Failed to get ID Token. \n
+        Error Code : ${error.statusCode}\n
         Error Message: ${error.result.message}`);
             });
             const id_token = (_a = res.result) === null || _a === void 0 ? void 0 : _a.value;
