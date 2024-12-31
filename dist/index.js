@@ -12789,7 +12789,7 @@ function buildSlackAttachments({ status, color, github }) {
           short: true,
         },
         {
-          title: 'Commmt',
+          title: 'Commit',
           value: `<https://github.com/${owner}/${repo}/commit/${sha} | ${short_sha}>`,
           short: true,
         },
